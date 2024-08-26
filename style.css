@@ -1,0 +1,155 @@
+/* Global Styles */
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #0a192f;
+    color: #ccd6f6;
+    line-height: 1.6;
+}
+
+a {
+    text-decoration: none;
+    color: #64ffda;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+/* Header */
+.header {
+    padding: 20px;
+    background-color: #0a192f;
+    text-align: center;
+}
+
+.header ul {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.header a {
+    font-size: 16px;
+}
+
+/* Container */
+.container {
+    width: 80%;
+    margin: 0 auto;
+}
+
+/* Intro Section */
+.intro {
+    padding: 50px 0;
+    display: flex;
+    align-items: center;
+}
+
+.intro-content {
+    display: flex;
+    gap: 50px;
+}
+
+.profile img {
+    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+}
+
+.intro-text {
+    max-width: 600px;
+}
+
+.intro-text h1 {
+    font-size: 50px;
+    line-height: 1.2;
+    color: #64ffda;
+}
+
+.info-cards {
+    display: flex;
+    gap: 20px;
+    margin: 20px 0;
+}
+
+.info-card {
+    background-color: #112240;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+}
+
+.years {
+    font-size: 36px;
+    color: #64ffda;
+    margin: 20px 0;
+}
+
+.timeline {
+    display: flex;
+    gap: 20px;
+}
+
+.timeline-item {
+    background-color: #112240;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    flex: 1;
+}
+
+.timeline-item h2 {
+    color: #64ffda;
+}
+
+/* Latest Works Section */
+.latest-works {
+    background-color: #112240;
+    padding: 50px 0;
+    text-align: center;
+}
+
+.latest-works h2 {
+    font-size: 36px;
+    color: #64ffda;
+    margin-bottom: 20px;
+}
+
+.works {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+.work-item {
+    background-color: #0a192f;
+    padding: 20px;
+    border-radius: 8px;
+    width: 30%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.work-item img {
+    width: 100%;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+/* Footer */
+footer {
+    background-color: #0a192f;
+    padding: 20px 0;
+    text-align: center;
+}
+
+footer .social-links {
+    margin-top: 10px;
+}
+
+footer .social-links a {
+    margin: 0 10px;
+}

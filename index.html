@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Hacking Style Text Animation with Cards</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background-color: #000;
+            color: #0f0;
+            font-family: 'Courier New', Courier, monospace;
+            display: block;
+            padding: 10px;
+            margin: 0;
+            overflow-y: scroll;
+        }
+
+        .hackingContainer {
+            display: flex;
+            align-items: center;
+            perspective: 1000px; /* Adds perspective for 3D effect */
+        }
+
+        .textBox {
+            flex: 1;
+            overflow-y: scroll;
+            max-height: 500px;
+            border: 1px solid #0f0;
+            padding: 10px;
+            margin-right: 20px;
+            background-color: #111;
+            position: relative;
+        }
+
+        .hackingText {
+            font-size: 1em;
+            font-weight: bold;
+            text-shadow: 2px 2px 5px #00ff00;
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: 2px solid #0f0;
+            width: 100%;
+            animation: blink-caret 0.75s step-end infinite, noise 0.5s infinite; /* Added noise effect */
+            margin-top: 5px;
+            position: relative;
+            color: #0f0;
+            transform: rotateY(0deg);
+            transition: transform 0.3s; /* Smooth transformation */
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent; }
+            50% { border-color: #0f0; }
+        }
+
+        @keyframes noise {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        .noiseEffect {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(0deg, transparent, transparent 1px, rgba(0,255,0,0.3) 2px, rgba(0,255,0,0.3) 3px);
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        button {
+            background-color: #0f0;
+            color: #000;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            margin-top: 20px;
+            font-size: 1em;
+            transition: transform 0.3s, background-color 0.3s;
+        }
+
+        button:hover {
+            transform: rotateX(10deg);
+            background-color: #0c0;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.8);
+            transform: scale(0.9);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .modal-content {
+            background-color: #333;
+            color: #0f0;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #0f0;
+            width: 80%;
+            text-align: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            border-radius: 10px;
+            position: relative;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .close {
+            color: #0f0;
+            float: right;
+            font-size: 1.5em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s, transform 0.3s;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #fff;
+            transform: scale(1.2);
+        }
+
+        .statusCircle {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #000;
+            border: 2px solid;
+            margin-right: 10px;
+            font-size: 1.5em;
+            color: #0f0;
+            position: relative;
+            transform: rotateY(0deg);
+            transition: transform 0.3s;
+        }
+
+        .statusSuccess {
+            border-color: #0f0;
+        }
+
+        .statusFailure {
+            border-color: #f00;
+        }
+
+        .statusCircle i {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .largeCircle {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: #000;
+            border: 4px solid #0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 20px;
+            position: relative;
+            animation: rotate 2s linear infinite;
+            transform: rotateY(0deg);
+            transition: transform 0.3s;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Progress Bar Styles */
+        .progressContainer {
+            width: 100%;
+            background-color: #333;
+            border: 1px solid #0f0;
+            height: 20px;
+            margin-top: 20px;
+            position: relative;
+            transform: rotateX(0deg);
+            transition: transform 0.3s;
+        }
+
+        .progressBar {
+            height: 100%;
+            background-color: #0f0;
+            width: 0%;
+            transition: width 1s;
+        }
+
+        /* Card Styles */
+        .cardContainer {
+            display: flex;
+            flex-direction: column;
+            margin-top: 20px;
+        }
+
+        .infoCard {
+            background-color: #111;
+            border: 1px solid #0f0;
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 10px;
+            color: #0f0;
+            font-weight: bold;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .infoCard.show {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="hackingContainer">
+        <div class="textBox" id="hackingContainer"></div>
+        <div class="largeCircle">
+            <i class="fa fa-globe"></i> <!-- Font Awesome icon -->
+        </div>
+    </div>
+    <div class="progressContainer">
+        <div class="progressBar" id="progressBar"></div>
+    </div>
+    <div class="cardContainer" id="cardContainer"></div> <!-- Card container -->
+    <audio id="hackingSound" src="./191169494-hacking-computer-loop.m4a"></audio>
+    <audio id="successSound" src="./success-48018.mp3"></audio>
+    <audio id="failureSound" src="./game-over-31-179699.mp3"></audio>
+    <audio id="cardAppearanceSound" src="./194362334-computer-access-granted.m4a"></audio> <!-- Added audio for card appearance -->
+    <button onclick="startHacking()">Start Hacking</button>
+
+    <!-- Modal Structure -->
+    <div id="hackingModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div id="modalMessage">
+                <div id="statusIndicator" class="statusCircle">
+                    <i id="statusIcon" class="fa"></i>
+                </div>
+                <p id="messageText">Hacking Status</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const hackingContainer = document.getElementById('hackingContainer');
+        const hackingSound = document.getElementById('hackingSound');
+        const successSound = document.getElementById('successSound');
+        const failureSound = document.getElementById('failureSound');
+        const cardAppearanceSound = document.getElementById('cardAppearanceSound'); // Added this line
+        const modal = document.getElementById('hackingModal');
+        const messageText = document.getElementById('messageText');
+        const statusIndicator = document.getElementById('statusIndicator');
+        const statusIcon = document.getElementById('statusIcon');
+        const progressBar = document.getElementById('progressBar');
+        const cardContainer = document.getElementById('cardContainer');
+
+        const possibleChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        const noiseDuration = 100; // Duration for noise effect
+        let progress = 0;
+
+        function generateRandomText(length) {
+            let result = '';
+            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            const charactersLength = characters.length;
+            for (let i = 0; i <= 50; i++) {
+                result += characters.charAt(Math.floor(Math.random() * charactersLength));
+            }
+            return result;
+        }
+
+        function createLine() {
+            const lineElement = document.createElement('div');
+            lineElement.classList.add('hackingText');
+            return lineElement;
+        }
+
+        function createCard(text) {
+            const card = document.createElement('div');
+            card.classList.add('infoCard');
+            card.textContent = text;
+            return card;
+        }
+
+        function updateProgressBar(value) {
+            progress = value;
+            progressBar.style.width = progress + '%';
+        }
+
+        function startHacking() {
+            typeText();
+        }
+
+        function typeText(lineIndex = 0) {
+            if (lineIndex >= 10) {
+                const lines = document.querySelectorAll('.hackingText');
+                let success = false;
+
+                lines.forEach(line => {
+                    if (line.textContent.includes("Hacking Successful")) {
+                        success = true;
+                    }
+                });
+
+                messageText.textContent = success ? "Hacking Successful" : "Hacking Failed";
+                statusIcon.className = success ? "fa fa-check" : "fa fa-times";
+                statusIndicator.className = `statusCircle ${success ? "statusSuccess" : "statusFailure"}`;
+                modal.style.display = "block";
+                modal.style.transform = "scale(1)";
+
+                if (success) {
+                    successSound.play();
+                } else {
+                    failureSound.play();
+                }
+
+                return;
+            }
+
+            const randomText = generateRandomText(30);
+            const lineElement = createLine();
+            lineElement.style.color = getRandomColor();
+            hackingContainer.appendChild(lineElement);
+
+            let i = 0;
+            hackingSound.play();
+
+            const interval = setInterval(() => {
+                if (i < randomText.length) {
+                    const randomChar = possibleChars[Math.floor(Math.random() * possibleChars.length)];
+                    lineElement.textContent = randomText.slice(0, i) + randomChar + randomText.slice(i + 1);
+
+                    setTimeout(() => {
+                        lineElement.textContent = randomText.slice(0, i + 1);
+                    }, 50);
+
+                    i++;
+                } else {
+                    clearInterval(interval);
+                    hackingSound.pause();
+                    hackingSound.currentTime = 0;
+                    updateProgressBar((lineIndex + 1) * 10); // Simulate progress
+
+                    const cardText = `Card ${lineIndex + 1} Information: ${randomText}`;
+                    const card = createCard(cardText);
+                    cardContainer.appendChild(card);
+
+                    cardAppearanceSound.play(); // Play the card appearance sound
+
+                    setTimeout(() => {
+                        card.classList.add('show');
+                    }, 100); // Delay to ensure smooth transition
+
+                    typeText(lineIndex + 1);
+                }
+            }, 100);
+        }
+
+        function getRandomColor() {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i <= 100; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+        function closeModal() {
+            modal.style.display = "none";
+            modal.style.transform = "scale(0.9)";
+        }
+    </script>
+</body>
+</html>
